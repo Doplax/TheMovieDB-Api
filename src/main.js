@@ -42,25 +42,31 @@ async function getTrendingPreview() {
 }
 
 async function getCategoriesPreview() {
-    const URL = "https://api.themoviedb.org/3/genre/movie/list/?api_key=" + KEY
+    const URL = "https://api.themoviedb.org/3/genre/movie/list?api_key=" + KEY // Me daba error pk tenia un parentesis
     const res = await fetch(URL);
     const data = await res.json()
 
-
+    console.log(data);
     let categories = data.genres
     categories.forEach(category => {
 
-        const tendencias = document.querySelector("#categoriesPreview .categoriesPreview-List")
+        const previewCategoriesContainer  = document.querySelector("#categoriesPreview .categoriesPreview-list")
+
         let categoryContainer = document.createElement("div")
         categoryContainer.classList.add("category-container")
 
-        let categoryTitle = document.createElement("img");
-        img.classList.add("movie-img");
-        img.src = 'https://image.tmdb.org/t/p/w300' + element.poster_path
-        img.alt = element.name
+        let categoryTitle = document.createElement("h3")
+        categoryTitle.classList.add("category-title")
         
-        movieContainer.appendChild(img)
-        tendencias.appendChild(movieContainer)
+        categoryTitle.id =  'id' + category.id
+        categoryTitle.innerText = category.name
+
+        
+        //categoryTitle.setAttribute('id', 'id' + category.id);
+        //const categoryTitleText = document.createTextNode(category.name);
+        
+        categoryContainer.appendChild(categoryTitle)
+        previewCategoriesContainer .appendChild(categoryContainer)
     });
 }
 
