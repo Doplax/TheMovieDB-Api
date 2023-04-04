@@ -18,10 +18,12 @@
 //    }
 //});
 
+
+
 async function getTrendingPreview() {
-    const URL = "https://api.themoviedb.org/3/trending/all/day?api_key=" + KEY
+    const URL = "https://api.themoviedb.org/3/trending/all/day?api_key=" + KEY 
     const res = await fetch(URL);
-    const movies = await res.json()
+    const movies = await res.json() // Al usar la desestructuración, podemos llamar al dato que quedamos sin tener que usar .json()
 
     const tendencias = document.querySelector("#trendingPreview .trendingPreview-movieList")
 
@@ -43,8 +45,12 @@ async function getTrendingPreview() {
 
 async function getCategoriesPreview() {
     const URL = "https://api.themoviedb.org/3/genre/movie/list?api_key=" + KEY // Me daba error pk tenia un parentesis
+
     const res = await fetch(URL);
-    const data = await res.json()
+        const data = await res.json()
+
+    //const { data } = await api('') // Como hemos definido en api los parametros por defecto, aqui solo deberemos usar el bloque al que necesitamos llamar
+
 
     console.log(data);
     let categories = data.genres
@@ -72,7 +78,5 @@ async function getCategoriesPreview() {
 
 
 // Cuando tenga la de cargar categorias, mover al fichero de js Navigation
-getTrendingPreview();
-getCategoriesPreview();
 
 
