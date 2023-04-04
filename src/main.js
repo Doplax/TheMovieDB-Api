@@ -8,27 +8,32 @@
 //}
 
 
-//const api = axios.create({
-//    baseURL: "https://api.themoviedb.org/3/",
-//    headers: {
-//        'Content-Type': 'application/json;charset=utf-8'
-//    },
-//    params: {
-//        "api_key":API_KEY, 
-//    }
-//});
+
+
+const api = axios.create({
+    baseURL: "https://api.themoviedb.org/3/",
+    headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+    },
+    params: {
+        "api_key":KEY, 
+    }
+});
 
 
 
 async function getTrendingPreview() {
-    const URL = "https://api.themoviedb.org/3/trending/all/day?api_key=" + KEY 
-    const res = await fetch(URL);
-    const movies = await res.json() // Al usar la desestructuración, podemos llamar al dato que quedamos sin tener que usar .json()
 
+    //const URL = "https://api.themoviedb.org/3/trending/all/day?api_key=" + KEY 
+    //const res = await fetch(URL);
+    //const movies = await res.json() // Al usar la desestructuración, podemos llamar al dato que quedamos sin tener que usar .json()
+
+    const { data } = await api('trending/all/day') // Como hemos definido en api los parametros por defecto, aqui solo deberemos usar el bloque al que necesitamos llamar
+    const movies = data.results;
+    
     const tendencias = document.querySelector("#trendingPreview .trendingPreview-movieList")
 
-    let array_moviesmovies = movies.results
-    array_moviesmovies.forEach(element => {
+    movies.forEach(element => {
 
         let movieContainer = document.createElement("div")
         movieContainer.classList.add("movie-container")
@@ -44,16 +49,13 @@ async function getTrendingPreview() {
 }
 
 async function getCategoriesPreview() {
-    const URL = "https://api.themoviedb.org/3/genre/movie/list?api_key=" + KEY // Me daba error pk tenia un parentesis
+    //const URL = "https://api.themoviedb.org/3/genre/movie/list?api_key=" + KEY // Me daba error pk tenia un parentesis
+    //const res = await fetch(URL);
+    //const data = await res.json()
 
-    const res = await fetch(URL);
-        const data = await res.json()
-
-    //const { data } = await api('') // Como hemos definido en api los parametros por defecto, aqui solo deberemos usar el bloque al que necesitamos llamar
-
-
-    console.log(data);
+    const {data} = await api('genre/movie/list') // Como hemos definido en api los parametros por defecto, aqui solo deberemos usar el bloque al que necesitamos llamar
     let categories = data.genres
+    
     categories.forEach(category => {
 
         const previewCategoriesContainer  = document.querySelector("#categoriesPreview .categoriesPreview-list")
