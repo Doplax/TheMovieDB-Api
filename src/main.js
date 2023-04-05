@@ -90,3 +90,26 @@ async function getCategoriesPreview() {
 // Cuando tenga la de cargar categorias, mover al fichero de js Navigation
 
 
+async function getMoviesByCategory(categoryId) {
+    const { data } = await api('/discover/movie', {
+        params: {
+            with_genres: categoryId,
+    }})
+    const movies = data.results;
+
+    genericSection.innerHTML = "";
+
+    movies.forEach(movie => {
+
+        const movieContainer = document.createElement('div');
+        movieContainer.classList.add('movie-container')
+
+        const movieImg = document.createElement('img')
+        movieImg.classList.add('movie-img')
+        movieImg.alt = movie.title
+        movieImg.src = 'https://image.tmdb.org/t/p/w300' + movie.poster_path
+
+        movieContainer.appendChild(movieImg);
+        genericSection.appendChild(movieContainer);
+    });
+}
