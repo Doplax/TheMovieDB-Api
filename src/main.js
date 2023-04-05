@@ -31,17 +31,18 @@ async function getTrendingPreview() {
     const { data } = await api('trending/all/day') // Como hemos definido en api los parametros por defecto, aqui solo deberemos usar el bloque al que necesitamos llamar
     const movies = data.results;
     
-    const tendencias = document.querySelector("#trendingPreview .trendingPreview-movieList")
+    //const tendencias = document.querySelector("#trendingPreview .trendingPreview-movieList")
 
-    movies.forEach(element => {
+    trendingMoviesPreviewList.innerHTML = "" // Limpiamos el contenido de la lista para que no se repitan los elementos
+    movies.forEach(movie => {
 
         let movieContainer = document.createElement("div")
         movieContainer.classList.add("movie-container")
 
-        let img = document.createElement("img");
-        img.classList.add("movie-img");
-        img.src = 'https://image.tmdb.org/t/p/w300' + element.poster_path
-        img.alt = element.name
+        let movieImg = document.createElement("img");
+        movieImg.classList.add("movie-img");
+        movieImg.src = 'https://image.tmdb.org/t/p/w300' + element.poster_path
+        movieImg.alt = movie.name
         
         movieContainer.appendChild(img)
         tendencias.appendChild(movieContainer)
@@ -58,7 +59,10 @@ async function getCategoriesPreview() {
     
     categories.forEach(category => {
 
-        const previewCategoriesContainer  = document.querySelector("#categoriesPreview .categoriesPreview-list")
+        //const previewCategoriesContainer  = document.querySelector("#categoriesPreview .categoriesPreview-list")
+        
+        categoriesPreviewList.innerHTML = "" // Limpiamos el contenido de la lista para que no se repitan los elementos
+
 
         let categoryContainer = document.createElement("div")
         categoryContainer.classList.add("category-container")
@@ -69,12 +73,16 @@ async function getCategoriesPreview() {
         categoryTitle.id =  'id' + category.id
         categoryTitle.innerText = category.name
 
+        categoryTitle.addEventListener('click', () => {
+            location.hash = `${category.id}-${category.name}`
+        })
+
         
         //categoryTitle.setAttribute('id', 'id' + category.id);
         //const categoryTitleText = document.createTextNode(category.name);
         
         categoryContainer.appendChild(categoryTitle)
-        previewCategoriesContainer .appendChild(categoryContainer)
+        categoriesPreviewList .appendChild(categoryContainer)
     });
 }
 
