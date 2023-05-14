@@ -32,6 +32,7 @@ function createMovies(movies, container) {
     });
 }
 function createCategories(categories,container){
+    container.innerHTML = ''
     categories.forEach(category => {
 
         let categoryContainer = document.createElement("div")
@@ -104,7 +105,6 @@ async function getTrendingMovies() {
 
 async function getMovieById(id){
     const { data: movie } = await api('movie/' + id);
-    console.log(movie);
 
     const movieImgUrl = "https://image.tmdb.org/t/p/w500" + movie.poster_path
     // Como la imágen la cargamos desde el css:
@@ -122,5 +122,15 @@ async function getMovieById(id){
     movieDetailScore.textContent = movie.vote_average;
 
     
-    createCategories(movie.genres, movieFetailCategoriesList)
+    createCategories(movie.genres, movieDetailCategoriesList)
+    getRelatedMoviesId(id)
+}   
+
+
+async function getRelatedMoviesId(id) {
+    const { data } = await api(`movie/${id}/recommendations`);
+    console.log(data);
+    const realtedMovies = data.results;
+
+    createMovies(realtedMovies, relatedMoviesContainer)
 }
