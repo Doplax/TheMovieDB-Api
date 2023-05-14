@@ -20,10 +20,10 @@ function navigator () {
         trendsPage()
 
     } else if (location.hash.startsWith('#search=')){
-        searchPage()
+        movieDetailsPage()
 
-    } else if (location.hash.startsWith('#movie=123')){
-        moviePage()
+    } else if (location.hash.startsWith('#movie=')){
+        movieDetailsPage()
 
     } else if (location.hash.startsWith('#category')){
         categoriesPage()
@@ -98,6 +98,10 @@ function movieDetailsPage() {
     categoriesPreviewSection.classList.add('inactive');
     genericSection.classList.add('inactive');
     movieDetailSection.classList.remove('inactive');
+
+    const [_,movieId] = location.hash.split('=');
+    getMovieById(movieId);
+
 
 }
 

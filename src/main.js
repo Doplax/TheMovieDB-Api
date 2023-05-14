@@ -16,6 +16,9 @@ function createMovies(movies, container) {
     movies.forEach(movie => {
         const movieContainer = document.createElement('div');
         movieContainer.classList.add('movie-container')
+        movieContainer.addEventListener("click",() => {
+            location.hash = "#movie=" + movie.id 
+        })
 
         const movieImg = document.createElement('img')
         movieImg.classList.add('movie-img')
@@ -24,6 +27,8 @@ function createMovies(movies, container) {
 
         movieContainer.appendChild(movieImg);
         container.appendChild(movieContainer);
+
+
     });
 }
 function createCategories(categories,container){
@@ -65,7 +70,6 @@ async function getCategoriesPreview() {
     createCategories(categories, categoriesPreviewList)
 }
 
-// Cuando seleccionemos una categoria, llamaremos a esta funcion para cargar sus películas correspondientes
 async function getMoviesByCategory(categoryId) {
     const { data } = await api('/discover/movie', {
         params: {
@@ -95,4 +99,28 @@ async function getTrendingMovies() {
     trendingMoviesPreviewList.innerHTML = "" // Limpiamos el contenido de la lista para que no se repitan los elementos
     createMovies(movies,genericSection)
     
+}
+
+
+async function getMovieById(id){
+    const { data: movie } = await api('movie/' + id);
+    console.log(movie);
+
+    const movieImgUrl = "https://image.tmdb.org/t/p/w500" + movie.poster_path
+    // Como la imágen la cargamos desde el css:
+    headerSection.style.background = `
+    linear-gradient(
+        180deg, 
+        rgba(0, 0, 0, 0.35) 19.27%,
+        rgba(0, 0, 0, 0) 29.17%
+    ),
+    url(${movieImgUrl})`
+
+    
+    movieDetailTitle.textContent = movie.title;
+    movieDetailDescription.textContent = movie.overview;
+    movieDetailScore.textContent = movie.vote_average;
+
+    
+    createCategories(movie.genres, movieFetailCategoriesList)
 }
