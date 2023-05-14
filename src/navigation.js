@@ -2,8 +2,8 @@ searchFormBtn.addEventListener('click', () => {
     location.hash = '#search=';
 })
 
-trendingBtn.addeventListener('click', () => {
-    location.hash = '#trends';
+trendingBtn.addEventListener('click', () => {
+    location.hash = '#trends=';
 })
 
 arrowBtn.addEventListener('click', () => {
@@ -12,7 +12,6 @@ arrowBtn.addEventListener('click', () => {
 
 window.addEventListener('DOMContentLoaded', navigator, false);
 window.addEventListener('hashchange', navigator, false);
-// Apuntar para que servia el 3r argumento
 
 function navigator () {
     console.log ({ location });
@@ -40,17 +39,17 @@ function navigator () {
 function homePage() {
     console.log("Home");
 
-    //headerSection.classList.remove('header-container--long')     // Para prevenir que carge la clase header-container--long en la home
-    //headerSection.style.backgroundImage = '';
-    //arrowBtn.classList.add('inactive'); // Para que no se vea el boton de atras en la home
-    //headerTitle.classList.add('inactive'); // Para que no se vea el titulo de la home
-    //headerCategoryTitle.classList.add('inactive'); // Para que no se vea el titulo de la categoria en la home
-    //searchForm.classList.remove('inactive'); // Para que se vea el buscador en la home
+    headerSection.classList.remove('header-container--long')     // Para prevenir que carge la clase header-container--long en la home
+    headerSection.style.backgroundImage = '';
+    arrowBtn.classList.add('inactive'); // Para que no se vea el boton de atras en la home
+    headerTitle.classList.add('inactive'); // Para que no se vea el titulo de la home
+    headerCategoryTitle.classList.add('inactive'); // Para que no se vea el titulo de la categoria en la home
+    searchForm.classList.remove('inactive'); // Para que se vea el buscador en la home
 
-    //trendingPreviewSection.classList.remove('inactive');
-    //categoriesPreviewSection.classList.remove('inactive'); // Para que se vea la seccion de categorias en la home
-    //genericSection.classList.add('inactive'); // Para que no se vea la seccion de genericList en la home
-    //movieDetailSection.classList.add('inactive'); // Para que no se vea la seccion de movieDetail en la home
+    trendingPreviewSection.classList.remove('inactive');
+    categoriesPreviewSection.classList.remove('inactive'); // Para que se vea la seccion de categorias en la home
+    genericSection.classList.add('inactive'); // Para que no se vea la seccion de genericList en la home
+    movieDetailSection.classList.add('inactive'); // Para que no se vea la seccion de movieDetail en la home
 
     getTrendingPreview();
     getCategoriesPreview();
@@ -86,7 +85,7 @@ function categoriesPage() {
 function movieDetailsPage() {
     console.log("Movie");
     headerSection.classList.add('header-container--long');
-    // headerSection.style.background = '';
+    //headerSection.style.background = '';
     arrowBtn.classList.remove('inactive');
     arrowBtn.classList.add('header-arrow--white');
     headerTitle.classList.add('inactive');

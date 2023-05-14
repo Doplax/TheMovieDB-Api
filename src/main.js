@@ -1,37 +1,19 @@
-//async function fetchData(){
-//    console.log(KEY);
-//    const prueba = "https://api.themoviedb.org/3/trending/all/day?api_key=" + KEY
-//    const res = await fetch(prueba);
-//    const data = await res.json()
-
-//    console.log(data);
-//}
-
-
-
-
 const api = axios.create({
     baseURL: "https://api.themoviedb.org/3/",
     headers: {
         'Content-Type': 'application/json;charset=utf-8'
     },
     params: {
-        "api_key":KEY, 
+        "api_key":API_KEY, 
     }
 });
 
 
-
 async function getTrendingPreview() {
-
-    //const URL = "https://api.themoviedb.org/3/trending/all/day?api_key=" + KEY 
-    //const res = await fetch(URL);
-    //const movies = await res.json() // Al usar la desestructuración, podemos llamar al dato que quedamos sin tener que usar .json()
-
     const { data } = await api('trending/all/day') // Como hemos definido en api los parametros por defecto, aqui solo deberemos usar el bloque al que necesitamos llamar
     const movies = data.results;
     
-    //const tendencias = document.querySelector("#trendingPreview .trendingPreview-movieList")
+    const tendencias = document.querySelector("#trendingPreview .trendingPreview-movieList")
 
     trendingMoviesPreviewList.innerHTML = "" // Limpiamos el contenido de la lista para que no se repitan los elementos
     movies.forEach(movie => {
@@ -41,28 +23,22 @@ async function getTrendingPreview() {
 
         let movieImg = document.createElement("img");
         movieImg.classList.add("movie-img");
-        movieImg.src = 'https://image.tmdb.org/t/p/w300' + element.poster_path
+        movieImg.src = 'https://image.tmdb.org/t/p/w300' + movie.poster_path
         movieImg.alt = movie.name
         
-        movieContainer.appendChild(img)
+        movieContainer.appendChild(movieImg)
         tendencias.appendChild(movieContainer)
     });
 }
 
 async function getCategoriesPreview() {
-    //const URL = "https://api.themoviedb.org/3/genre/movie/list?api_key=" + KEY // Me daba error pk tenia un parentesis
-    //const res = await fetch(URL);
-    //const data = await res.json()
-
     const {data} = await api('genre/movie/list') // Como hemos definido en api los parametros por defecto, aqui solo deberemos usar el bloque al que necesitamos llamar
     let categories = data.genres
     
+    const previewCategoriesContainer  = document.querySelector("#categoriesPreview .categoriesPreview-list")
+    previewCategoriesContainer.innerHTML = "" // Limpiamos el contenido de la lista para que no se repitan los elementos
+
     categories.forEach(category => {
-
-        //const previewCategoriesContainer  = document.querySelector("#categoriesPreview .categoriesPreview-list")
-        
-        categoriesPreviewList.innerHTML = "" // Limpiamos el contenido de la lista para que no se repitan los elementos
-
 
         let categoryContainer = document.createElement("div")
         categoryContainer.classList.add("category-container")
@@ -80,16 +56,14 @@ async function getCategoriesPreview() {
         
         //categoryTitle.setAttribute('id', 'id' + category.id);
         //const categoryTitleText = document.createTextNode(category.name);
-        
+        console.log(category);
         categoryContainer.appendChild(categoryTitle)
-        categoriesPreviewList .appendChild(categoryContainer)
+        categoriesPreviewList.appendChild(categoryContainer)
     });
 }
 
 
 // Cuando tenga la de cargar categorias, mover al fichero de js Navigation
-
-
 async function getMoviesByCategory(categoryId) {
     const { data } = await api('/discover/movie', {
         params: {
@@ -100,7 +74,6 @@ async function getMoviesByCategory(categoryId) {
     genericSection.innerHTML = "";
 
     movies.forEach(movie => {
-
         const movieContainer = document.createElement('div');
         movieContainer.classList.add('movie-container')
 
@@ -113,3 +86,4 @@ async function getMoviesByCategory(categoryId) {
         genericSection.appendChild(movieContainer);
     });
 }
+
