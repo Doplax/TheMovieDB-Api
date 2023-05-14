@@ -9,11 +9,10 @@ const api = axios.create({
 });
 
 
-async function getTrendingPreview() {
+async function getTrendingMoviesPreview() {
     const { data } = await api('trending/all/day') // Como hemos definido en api los parametros por defecto, aqui solo deberemos usar el bloque al que necesitamos llamar
     const movies = data.results;
     
-    const tendencias = document.querySelector("#trendingPreview .trendingPreview-movieList")
 
     trendingMoviesPreviewList.innerHTML = "" // Limpiamos el contenido de la lista para que no se repitan los elementos
     movies.forEach(movie => {
@@ -27,7 +26,7 @@ async function getTrendingPreview() {
         movieImg.alt = movie.name
         
         movieContainer.appendChild(movieImg)
-        tendencias.appendChild(movieContainer)
+        trendingMoviesPreviewList.appendChild(movieContainer)
     });
 }
 
@@ -35,8 +34,7 @@ async function getCategoriesPreview() {
     const {data} = await api('genre/movie/list') // Como hemos definido en api los parametros por defecto, aqui solo deberemos usar el bloque al que necesitamos llamar
     let categories = data.genres
     
-    const previewCategoriesContainer  = document.querySelector("#categoriesPreview .categoriesPreview-list")
-    previewCategoriesContainer.innerHTML = "" // Limpiamos el contenido de la lista para que no se repitan los elementos
+    categoriesPreviewList.innerHTML = "" // Limpiamos el contenido de la lista para que no se repitan los elementos
 
     categories.forEach(category => {
 

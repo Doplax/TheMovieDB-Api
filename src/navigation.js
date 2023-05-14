@@ -51,7 +51,7 @@ function homePage() {
     genericSection.classList.add('inactive'); // Para que no se vea la seccion de genericList en la home
     movieDetailSection.classList.add('inactive'); // Para que no se vea la seccion de movieDetail en la home
 
-    getTrendingPreview();
+    getTrendingMoviesPreview();
     getCategoriesPreview();
 
 }
