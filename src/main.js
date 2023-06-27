@@ -4,7 +4,7 @@ const api = axios.create({
         'Content-Type': 'application/json;charset=utf-8'
     },
     params: {
-        "api_key":API_KEY, 
+        "api_key":KEY, 
     }
 });
 
@@ -81,15 +81,18 @@ async function getMoviesByCategory(categoryId) {
 }
 
 async function getMoviesBySearch(query){
-    const { data } = await api('/search/movie', {
+    const { data } = await api.get('/search/movie', {
         params: {
-            query,
-    }})
+            query: query
+        }
+    });
     const movies = data.results;
+    console.log(movies);
     genericSection.innerHTML = "";
 
-    createMovies(movies,genericSection)
+    createMovies(movies, genericSection)
 }
+
 
 async function getTrendingMovies() {
     const { data } = await api('trending/all/day') // Como hemos definido en api los parametros por defecto, aqui solo deberemos usar el bloque al que necesitamos llamar
